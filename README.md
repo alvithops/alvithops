@@ -19,8 +19,8 @@
 
 ---
 
-### [ > ] HACKER_MANIFESTO.txt
-> *"Information wants to be free. We are the architects of the digital void. In a world of ones and zeros, we choose the path of the glitch. System integrity: COMPROMISED. Innovation: ENGAGED."*
+### [ > ] HACKER_KENA HACK
+> *"Information wants to be free. We are the architects of the digital void. In a world of ones and zeros, we choose the path of the glitch. System integrity: COMPROMISED. Innovation: ENGAGED."*SNI
 
 ---
 
