@@ -1,26 +1,24 @@
 <div align="center">
 
-<!-- ASCII ART HEADER -->
 <pre>
-█████╗ ██╗     ██╗   ██╗██╗████████╗██╗  ██╗ ██████╗ ██████╗ ███████╗
-██╔══██╗██║     ██║   ██║██║╚══██╔══╝██║  ██║██╔═══██╗██╔══██╗██╔════╝
-███████║██║     ██║   ██║██║   ██║   ███████║██║   ██║██████╔╝███████╗
-██╔══██║██║     ╚██╗ ██╔╝██║   ██║   ██╔══██║██║   ██║██╔═══╝ ╚════██║
-██║  ██║███████╗ ╚████╔╝ ██║   ██║   ██║  ██║╚██████╔╝██║     ███████║
-╚═╝  ╚═╝╚══════╝  ╚═══╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚══════╝
+█████╗ ██╗      ██╗   ██╗██╗████████╗██╗  ██╗ ██████╗ ██████╗ ███████╗
+██╔══██╗██║      ██║   ██║██║╚══██╔══╝██║  ██║██╔═══██╗██╔══██╗██╔════╝
+███████║██║      ██║   ██║██║   ██║   ███████║██║   ██║██████╔╝███████╗
+██╔══██║██║      ╚██╗ ██╔╝██║   ██║   ██╔══██║██║   ██║██╔═══╝ ╚════██║
+██║  ██║███████╗  ╚████╔╝ ██║   ██║   ██║  ██║╚██████╔╝██║     ███████║
+╚═╝  ╚═╝╚══════╝   ╚═══╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚══════╝
 </pre>
 
-<!-- TYPING ANIMATION -->
 <a href="https://git.io/typing-svg">
   <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&color=00FF41&center=true&vCenter=true&width=435&lines=Initialing+System...;Loading+Neural+Networks...;Accessing+Mainframe...;Welcome+to+Alvithops+Console;" alt="Typing SVG" />
 </a>
 
-<img src="https://raw.githubusercontent.com/MeghnaS21/MeghnaS21/output/github-contribution-grid-snake.gif" alt="Snake Animation" />
+<img src="https://raw.githubusercontent.com/alvithops/alvithops/output/github-contribution-grid-snake.gif" alt="Snake Animation" />
 
 ---
 
 ### [ > ] HACKER_KENA HACK
-> *"Information wants to be free. We are the architects of the digital void. In a world of ones and zeros, we choose the path of the glitch. System integrity: COMPROMISED. Innovation: ENGAGED."*SNI
+> *"Information wants to be free. We are the architects of the digital void. In a world of ones and zeros, we choose the path of the glitch. System integrity: COMPROMISED. Innovation: ENGAGED."*
 
 ---
 
@@ -49,18 +47,5 @@
 
 ### [ > ] ESTABLISH_CONNECTION.cmd
 ```bash
-$ contact --service email --target alvithops@gmail.com
-$ contact --service github --target @alvithops
+$contact --service email --target alvithops@gmail.com$ contact --service github --target @alvithops
 $ contact --service location --target Indonesia/Cyber-Void
-```
-
----
-
-<p align="center">
-  <i>"The future is already here — it's just not very evenly distributed."</i><br>
-  <b>[ SYSTEM_STATUS: OPERATIONAL ]</b>
-</p>
-
-![snake gif](https://github.com/alvithops/alvithops/blob/output/github-contribution-grid-snake.gif)
-
-</div>
