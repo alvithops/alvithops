@@ -2,19 +2,18 @@ name: Generate Snake
 
 on:
   schedule:
-    - cron: "0 */6 * * *" # Berjalan setiap 6 jam
-  workflow_dispatch: # Memungkinkan menjalankan manual dari tab Actions
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Memberikan izin menulis ke repositori
+      contents: write # Izin krusial agar Action bisa menyimpan file
     
     steps:
       - uses: actions/checkout@v3
 
-      # Menggenerasi animasi snake
       - uses: Platane/snk@v3
         id: snake-gif
         with:
@@ -23,8 +22,8 @@ jobs:
             dist/github-contribution-grid-snake.gif
             dist/github-contribution-grid-snake.svg
             dist/github-contribution-grid-snake-dark.svg?palette=github-dark
+            dist/ocean.gif?color_snake=orange&color_dots=#bfd6f6,#8dbdff,#64a1f4,#4b91f1,#3c7dd9
 
-      # Mengirim hasil ke branch 'output'
       - name: Push changes
         uses: crazy-max/ghaction-github-pages@v3
         with:
