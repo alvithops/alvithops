@@ -61,4 +61,6 @@ $ contact --service location --target Indonesia/Cyber-Void
   <b>[ SYSTEM_STATUS: OPERATIONAL ]</b>
 </p>
 
+![snake gif](https://github.com/alvithops/alvithops/blob/output/github-contribution-grid-snake.gif)
+
 </div>
