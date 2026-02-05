@@ -15,7 +15,7 @@
   <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&color=00FF41&center=true&vCenter=true&width=435&lines=Initialing+System...;Loading+Neural+Networks...;Accessing+Mainframe...;Welcome+to+Alvithops+Console;" alt="Typing SVG" />
 </a>
 
-<img src="https://raw.githubusercontent.com/alvithops/alvithops/main/github-contribution-grid-snake.svg" alt="Snake Animation" />
+<img src="https://raw.githubusercontent.com/MeghnaS21/MeghnaS21/output/github-contribution-grid-snake.gif" alt="Snake Animation" />
 
 ---
 
@@ -62,4 +62,3 @@ $ contact --service location --target Indonesia/Cyber-Void
 </p>
 
 </div>
-![snake_gif](https://github.com/MeghnaS21/MeghnaS21/blob/output/github-contribution-grid-snake.gif)
