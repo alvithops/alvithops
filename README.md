@@ -37,15 +37,36 @@
 
 ---
 
-### [ > ] SYSTEM_STATS.log
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=alvithops&show_icons=true&theme=tokyonight&bg_color=0D1117&title_color=00FF41&text_color=FFFFFF&icon_color=00FF41" alt="GitHub Stats" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=alvithops&layout=compact&theme=tokyonight&bg_color=0D1117&title_color=00FF41&text_color=FFFFFF" alt="Top Languages" />
-</p>
+<div align="center">
 
----
+## 🕐 ANIMASI HACKER - 60 DETIK AKTIF
 
-### [ > ] ESTABLISH_CONNECTION.cmd
 ```bash
-$contact --service email --target alvithops@gmail.com$ contact --service github --target @alvithops
-$ contact --service location --target Indonesia/Cyber-Void
+╔══════════════════════════════════════════╗
+║       REAL-TIME HACKER ANIMATION        ║
+║         DURATION: 60 SECONDS            ║
+╚══════════════════════════════════════════╝
+
+[SYSTEM BOOT] ████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ 30%
+
+$> CONNECTING TO MAINFRAME...
+[+] TARGET: ALVITHOPS_SYSTEM
+[+] STATUS: ENCRYPTED
+[+] TIME: [DYNAMIC COUNTDOWN]
+
+[LIVE FEED]
+════════════════════════════════════════════
+00:60 ████████████████████████████████████
+00:45 ███████████████████████▒▒▒▒▒▒▒▒▒▒▒▒▒
+00:30 ███████████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+00:15 ███████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+00:00 ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+════════════════════════════════════════════
+
+[ACTIVE PROCESSES]
+• DATA_EXFILTRATION ███████▒▒▒ 70%
+• ENCRYPTION_LAYER █████▒▒▒▒▒ 50%
+• STEALTH_MODE ██████████ 100%
+• LOG_CLEANER ███▒▒▒▒▒▒▒ 30%
+
+$> ANIMATION_COMPLETE_IN: [COUNTING...]
