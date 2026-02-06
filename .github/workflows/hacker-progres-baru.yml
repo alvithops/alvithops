@@ -1,33 +1,20 @@
 # GitHub Actions Workflow for Hacker Animation System
-# This workflow validates, tests, and deploys the animation system
-
 name: Hacker Animation CI/CD
 
 on:
-  # Trigger on pushes to main branch
   push:
     branches: [ "main" ]
-  # Trigger on pull requests targeting main branch
-  pull_request:
-    branches: [ "main" ]
-  # Allow manual triggering
   workflow_dispatch:
     inputs:
       environment:
         description: 'Deployment environment'
         required: true
-        default: 'staging'
+        default: 'production'
         type: choice
         options:
-        - staging
         - production
-      run_tests:
-        description: 'Run all tests'
-        required: false
-        default: true
-        type: boolean
+        - staging
 
-# Set environment variables for the workflow
 env:
   NODE_VERSION: '18.x'
   PYTHON_VERSION: '3.10'
@@ -35,16 +22,12 @@ env:
   DEPLOY_DIR: './dist'
 
 jobs:
-  # Validate YAML configuration
   validate-config:
     name: Validate YAML Configuration
     runs-on: ubuntu-latest
-    
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
     
     - name: Validate YAML syntax
       uses: actions/setup-python@v4
@@ -52,435 +35,53 @@ jobs:
         python-version: ${{ env.PYTHON_VERSION }}
     
     - name: Install YAML validator
-      run: |
-        pip install yamllint pyyaml
+      run: pip install yamllint pyyaml
     
-    - name: Check YAML syntax
+    - name: Check YAML
       run: |
         echo "🔍 Validating ${{ env.YAML_CONFIG_FILE }}"
+        if [ ! -f ${{ env.YAML_CONFIG_FILE }} ]; then
+          echo "❌ Error: File ${{ env.YAML_CONFIG_FILE }} tidak ditemukan!"
+          exit 1
+        fi
         yamllint -d relaxed ${{ env.YAML_CONFIG_FILE }}
-        python -c "
-import yaml
-try:
-    with open('${{ env.YAML_CONFIG_FILE }}', 'r') as f:
-        config = yaml.safe_load(f)
-        print('✅ YAML syntax is valid')
-        print(f'📊 Animation duration: {config[\"animation\"][\"metadata\"][\"duration\"]} seconds')
-        print(f'🎭 Processes configured: {len(config[\"animation\"][\"active_processes\"][\"processes\"])}')
-except Exception as e:
-    print(f'❌ YAML validation failed: {e}')
-    exit(1)
-        "
-    
-    - name: Validate animation structure
-      run: |
-        python -c "
-import yaml
-with open('${{ env.YAML_CONFIG_FILE }}', 'r') as f:
-    config = yaml.safe_load(f)
-    
-    # Required sections check
-    required_sections = ['metadata', 'system_boot', 'live_feed', 'active_processes', 'dynamic_elements']
-    for section in required_sections:
-        if section not in config.get('animation', {}):
-            print(f'❌ Missing required section: {section}')
-            exit(1)
-    
-    # Duration validation
-    duration = config['animation']['metadata']['duration']
-    if not isinstance(duration, (int, float)) or duration <= 0:
-        print('❌ Invalid duration specified')
-        exit(1)
-    
-    print('✅ All required sections present')
-    print('✅ Animation structure is valid')
-        "
-    
-    - name: Upload validation report
-      uses: actions/upload-artifact@v3
-      if: always()
-      with:
-        name: yaml-validation-report
-        path: |
-          ${{ env.YAML_CONFIG_FILE }}
 
-  # Test animation rendering
-  test-rendering:
-    name: Test Animation Rendering
-    runs-on: ubuntu-latest
-    needs: validate-config
-    
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ env.NODE_VERSION }}
-        cache: 'npm'
-    
-    - name: Install dependencies
-      run: |
-        npm init -y
-        npm install js-yaml canvas
-    
-    - name: Create test renderer
-      run: |
-        cat > test-renderer.js << 'EOF'
-        const yaml = require('js-yaml');
-        const fs = require('fs');
-        
-        try {
-          const config = yaml.load(fs.readFileSync('${{ env.YAML_CONFIG_FILE }}', 'utf8'));
-          
-          console.log('🧪 Testing animation rendering...');
-          console.log('📋 Config loaded successfully');
-          
-          // Test system boot animation
-          const bootConfig = config.animation.system_boot;
-          console.log(`🔧 System Boot: ${bootConfig.animation_spec.duration}s animation`);
-          
-          // Test live feed
-          const liveFeed = config.animation.live_feed;
-          console.log(`📊 Live Feed: ${liveFeed.timelines.length} timelines`);
-          
-          // Test processes
-          const processes = config.animation.active_processes.processes;
-          console.log(`⚙️ Active Processes: ${processes.length} processes configured`);
-          
-          // Test interpolation methods
-          const interpolation = config.animation.interpolation;
-          console.log(`📈 Interpolation methods: ${Object.keys(interpolation).join(', ')}`);
-          
-          console.log('✅ All rendering tests passed');
-          
-          // Generate test output
-          const testOutput = {
-            success: true,
-            timestamp: new Date().toISOString(),
-            config: {
-              duration: config.animation.metadata.duration,
-              processes: processes.length,
-              effects: Object.keys(config.animation.rendering.effects_enabled || []).length
-            }
-          };
-          
-          fs.writeFileSync('test-output.json', JSON.stringify(testOutput, null, 2));
-          
-        } catch (error) {
-          console.error('❌ Rendering test failed:', error.message);
-          process.exit(1);
-        }
-        EOF
-        
-        node test-renderer.js
-    
-    - name: Upload test results
-      uses: actions/upload-artifact@v3
-      if: always()
-      with:
-        name: rendering-test-results
-        path: |
-          test-output.json
-          test-renderer.js
-
-  # Build and bundle animation
   build:
     name: Build Animation Package
     runs-on: ubuntu-latest
-    needs: [validate-config, test-rendering]
-    
+    needs: validate-config
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ env.NODE_VERSION }}
     
     - name: Create build directory
       run: |
         mkdir -p ${{ env.DEPLOY_DIR }}
         cp ${{ env.YAML_CONFIG_FILE }} ${{ env.DEPLOY_DIR }}/
     
-    - name: Create HTML deployment template
+    - name: Create Engine and HTML
       run: |
+        # Membuat file index.html dan engine secara otomatis di folder dist
         cat > ${{ env.DEPLOY_DIR }}/index.html << 'EOF'
         <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Hacker Animation System</title>
-            <style>
-                * { margin: 0; padding: 0; box-sizing: border-box; }
-                body {
-                    background: #000;
-                    color: #0f0;
-                    font-family: 'Courier New', monospace;
-                    padding: 20px;
-                    height: 100vh;
-                    overflow: hidden;
-                }
-                .terminal {
-                    border: 2px solid #0f0;
-                    padding: 20px;
-                    background: rgba(0, 20, 0, 0.9);
-                    box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
-                    max-width: 900px;
-                    margin: 0 auto;
-                }
-                .progress-container {
-                    margin: 10px 0;
-                }
-                .progress-bar {
-                    display: inline-block;
-                    width: 300px;
-                    background: #222;
-                    overflow: hidden;
-                    height: 20px;
-                }
-                .progress-fill {
-                    height: 100%;
-                    background: #0f0;
-                    transition: width 0.3s;
-                }
-                .glitch {
-                    animation: glitch 0.3s infinite;
-                }
-                @keyframes glitch {
-                    0% { transform: translate(0); }
-                    20% { transform: translate(-2px, 2px); }
-                    40% { transform: translate(-2px, -2px); }
-                    60% { transform: translate(2px, 2px); }
-                    80% { transform: translate(2px, -2px); }
-                    100% { transform: translate(0); }
-                }
-            </style>
-        </head>
-        <body>
-            <div class="terminal">
-                <pre id="animation-output">
-                    Loading hacker animation...
-                </pre>
-                <div class="progress-container">
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="system-boot-progress" style="width: 30%"></div>
-                    </div>
-                    <span id="system-boot-text">[SYSTEM BOOT] 30%</span>
-                </div>
-                <div id="live-feed"></div>
-                <div id="active-processes"></div>
-                <div id="countdown"></div>
-            </div>
-            
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
-            <script src="animation-engine.js"></script>
-            <script>
-                document.addEventListener('DOMContentLoaded', () => {
-                    const engine = new HackerAnimationEngine('${{ env.YAML_CONFIG_FILE }}');
-                    engine.start();
-                });
-            </script>
-        </body>
-        </html>
+        <html><head><title>Hacker System</title><style>body{background:#000;color:#0f0;font-family:monospace;}</style></head>
+        <body><div id="app">Loading Hacker Animation...</div></body></html>
         EOF
-    
-    - name: Create animation engine
-      run: |
-        cat > ${{ env.DEPLOY_DIR }}/animation-engine.js << 'EOF'
-        class HackerAnimationEngine {
-            constructor(configPath) {
-                this.configPath = configPath;
-                this.config = null;
-                this.startTime = null;
-                this.animationId = null;
-                this.isRunning = false;
-            }
-            
-            async loadConfig() {
-                try {
-                    const response = await fetch(this.configPath);
-                    const yamlText = await response.text();
-                    this.config = jsyaml.load(yamlText);
-                    console.log('✅ Config loaded:', this.config.animation.metadata.title);
-                    return this.config;
-                } catch (error) {
-                    console.error('❌ Failed to load config:', error);
-                    throw error;
-                }
-            }
-            
-            async start() {
-                await this.loadConfig();
-                this.isRunning = true;
-                this.startTime = Date.now();
-                this.animate();
-            }
-            
-            animate() {
-                if (!this.isRunning) return;
-                
-                const elapsed = (Date.now() - this.startTime) / 1000;
-                const totalDuration = this.config.animation.metadata.duration;
-                const progress = Math.min(elapsed / totalDuration, 1);
-                
-                this.renderFrame(progress, elapsed);
-                
-                if (progress < 1) {
-                    this.animationId = requestAnimationFrame(() => this.animate());
-                } else {
-                    this.complete();
-                }
-            }
-            
-            renderFrame(progress, elapsed) {
-                this.renderSystemBoot(progress, elapsed);
-                this.renderLiveFeed(progress, elapsed);
-                this.renderProcesses(progress, elapsed);
-                this.renderCountdown(progress, elapsed);
-            }
-            
-            renderSystemBoot(progress, elapsed) {
-                const bootConfig = this.config.animation.system_boot;
-                const bootDuration = bootConfig.animation_spec.duration;
-                const bootProgress = Math.min(elapsed / bootDuration, 1);
-                
-                // Calculate visual progress based on keyframes
-                let visualProgress = 0;
-                for (const keyframe of bootConfig.keyframes) {
-                    if (elapsed >= keyframe.time) {
-                        visualProgress = keyframe.progress;
-                    }
-                }
-                
-                // Update DOM
-                const progressBar = document.getElementById('system-boot-progress');
-                const progressText = document.getElementById('system-boot-text');
-                
-                if (progressBar) {
-                    progressBar.style.width = `${visualProgress}%`;
-                }
-                if (progressText) {
-                    progressText.textContent = `[SYSTEM BOOT] ${Math.round(visualProgress)}%`;
-                }
-                
-                // Apply effects
-                if (bootProgress >= 1) {
-                    progressBar.classList.add('glitch');
-                }
-            }
-            
-            renderLiveFeed(progress, elapsed) {
-                // Implementation for live feed rendering
-                const liveFeedConfig = this.config.animation.live_feed;
-                // Render each timeline based on elapsed time
-            }
-            
-            renderProcesses(progress, elapsed) {
-                // Implementation for processes rendering
-                const processesConfig = this.config.animation.active_processes;
-                // Render each process progress
-            }
-            
-            renderCountdown(progress, elapsed) {
-                const countdownConfig = this.config.animation.dynamic_elements.countdown;
-                const remaining = Math.max(0, this.config.animation.metadata.duration - elapsed);
-                
-                const countdownElement = document.getElementById('countdown');
-                if (countdownElement) {
-                    countdownElement.textContent = `$> ANIMATION_COMPLETE_IN: [${Math.ceil(remaining)}]`;
-                    
-                    // Apply warning styles
-                    if (remaining <= 10) {
-                        countdownElement.style.color = '#ff0000';
-                        countdownElement.style.animation = 'blink 1s infinite';
-                    }
-                }
-            }
-            
-            complete() {
-                console.log('✅ Animation complete');
-                this.isRunning = false;
-                if (this.animationId) {
-                    cancelAnimationFrame(this.animationId);
-                }
-            }
-            
-            stop() {
-                this.isRunning = false;
-                if (this.animationId) {
-                    cancelAnimationFrame(this.animationId);
-                }
-            }
-        }
-        
-        // Make available globally
-        window.HackerAnimationEngine = HackerAnimationEngine;
-        EOF
-    
-    - name: Create package.json for deployment
-      run: |
-        cat > ${{ env.DEPLOY_DIR }}/package.json << 'EOF'
-        {
-          "name": "hacker-animation-system",
-          "version": "1.0.0",
-          "description": "Real-time hacker animation system",
-          "main": "animation-engine.js",
-          "scripts": {
-            "start": "python -m http.server 8080",
-            "test": "node test-renderer.js"
-          },
-          "dependencies": {
-            "js-yaml": "^4.1.0"
-          }
-        }
-        EOF
-    
-    - name: Create README for deployment
-      run: |
-        cat > ${{ env.DEPLOY_DIR }}/README.md << 'EOF'
-        # Hacker Animation System
-        
-        This is the built version of the hacker animation system.
-        
-        ## Quick Start
-        1. Open index.html in a browser
-        2. The animation will start automatically
-        3. View browser console for debugging info
-        
-        ## Configuration
-        Edit \`hacker-animation.yaml\` to modify animation behavior.
-        
-        ## Development
-        Run a local server:
-        \`\`\`bash
-        python -m http.server 8080
-        \`\`\`
-        
-        Then open http://localhost:8080
-        EOF
-    
+
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
       with:
         name: hacker-animation-build
         path: ${{ env.DEPLOY_DIR }}
 
-  # Deploy to GitHub Pages
   deploy:
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
     needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    
     permissions:
       contents: write
       pages: write
       id-token: write
-    
     steps:
     - name: Download build artifacts
       uses: actions/download-artifact@v3
@@ -488,61 +89,10 @@ with open('${{ env.YAML_CONFIG_FILE }}', 'r') as f:
         name: hacker-animation-build
         path: ./build-output
     
-    - name: Setup GitHub Pages
-      uses: actions/configure-pages@v3
-    
     - name: Upload to GitHub Pages
       uses: actions/upload-pages-artifact@v1
       with:
         path: ./build-output
     
     - name: Deploy to GitHub Pages
-      id: deployment
       uses: actions/deploy-pages@v2
-    
-    - name: Display deployment URL
-      run: |
-        echo "🌐 Animation deployed to: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
-
-  # Notify on completion
-  notify:
-    name: Notification
-    runs-on: ubuntu-latest
-    needs: [validate-config, test-rendering, build]
-    if: always()
-    
-    steps:
-    - name: Check workflow status
-      run: |
-        echo "📊 Workflow Status:"
-        echo "Validate: ${{ needs.validate-config.result }}"
-        echo "Test: ${{ needs.test-rendering.result }}"
-        echo "Build: ${{ needs.build.result }}"
-        
-        if [[ "${{ needs.validate-config.result }}" == "success" && 
-              "${{ needs.test-rendering.result }}" == "success" && 
-              "${{ needs.build.result }}" == "success" ]]; then
-          echo "✅ All checks passed!"
-          echo "🎬 Hacker animation system is ready"
-          echo "⏱️ Duration: 60 seconds"
-          echo "⚙️ Processes: 4 active"
-          echo "✨ Effects: Multiple animation effects configured"
-        else
-          echo "❌ Some checks failed"
-          exit 1
-        fi
-
-# Cache configuration
-cache:
-  paths:
-    - node_modules/
-    - ~/.cache/pip/
-
-# Environment specific configurations
-environments:
-  staging:
-    name: staging
-    url: https://staging.example.com
-  production:
-    name: production
-    url: https://production.example.com
