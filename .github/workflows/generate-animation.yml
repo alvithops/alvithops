@@ -1,5 +1,4 @@
-# File: .github/workflows/generate-animation.yml
-name: alvithops
+name: Generate Hacker Animation
 
 on:
   push:
