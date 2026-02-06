@@ -1,4 +1,4 @@
-name: Generate Advanced Hacker Animation
+name: Generate Advanced Hacker Animation FIXED
 
 on:
   workflow_dispatch:
@@ -22,103 +22,72 @@ jobs:
                xmlns="http://www.w3.org/2000/svg">
 
             <defs>
-              <!-- NEON -->
-              <filter id="neon">
-                <feGaussianBlur stdDeviation="1.3"/>
-              </filter>
-
-              <!-- FACE MASK -->
-              <mask id="faceMask">
-                <rect width="100%" height="100%" fill="white"/>
-                <ellipse cx="450" cy="250" rx="130" ry="160" fill="black"/>
-              </mask>
+              <!-- FACE CLIP (BINARY EXCLUDED HERE) -->
+              <clipPath id="faceClip">
+                <ellipse cx="450" cy="250" rx="130" ry="160"/>
+              </clipPath>
             </defs>
 
             <!-- BACKGROUND -->
             <rect width="100%" height="100%" fill="black"/>
 
-            <!-- MATRIX RAIN -->
-            <g mask="url(#faceMask)"
-               font-family="monospace"
-               font-size="16"
-               fill="#00ff66"
-               filter="url(#neon)">
+            <!-- MATRIX BINARY (OUTSIDE FACE) -->
+            <g font-family="monospace"
+               font-size="20"
+               fill="#00ff66">
 
-              <!-- 50 COLUMNS -->
-              <!-- GENERATED MANUALLY (GITHUB SAFE) -->
-              
-              <!-- TEMPLATE COLUMN -->
-              <!-- COPY LOGIC WITH VARIATION -->
-              
-              <!-- Columns -->
-              <!-- Repeat with variations -->
-              <text x="20" y="-500">1010011100101010
+              <!-- 30 DENSE COLUMNS (VISUALLY MASSIVE) -->
+              <!-- TOP → DOWN -->
+              <text x="20" y="0">101010101010
                 <animateTransform type="translate"
-                  from="0 -600" to="0 800"
-                  dur="6s" begin="-1s"
-                  repeatCount="indefinite"/>
-                <animate attributeName="opacity"
-                  values="1;0.3;1"
-                  dur="1.5s" repeatCount="indefinite"/>
-              </text>
-
-              <text x="60" y="-700">0101010100110011
-                <animateTransform type="translate"
-                  from="0 -800" to="0 900"
-                  dur="9s" begin="-4s"
+                  from="0 -500" to="0 600"
+                  dur="6s" begin="-3s"
                   repeatCount="indefinite"/>
               </text>
 
-              <text x="120" y="700">1100101011001010
+              <text x="60" y="0">010101010101
                 <animateTransform type="translate"
-                  from="0 800" to="0 -900"
+                  from="0 -600" to="0 700"
                   dur="8s" begin="-6s"
                   repeatCount="indefinite"/>
               </text>
 
-              <text x="180" y="-400">0011010110100101
+              <text x="100" y="0">110010101100
                 <animateTransform type="translate"
-                  from="0 -500" to="0 800"
-                  dur="7s" begin="-2s"
+                  from="0 -700" to="0 800"
+                  dur="5s" begin="-1s"
                   repeatCount="indefinite"/>
               </text>
 
-              <text x="240" y="-900">1010100101011010
+              <text x="140" y="500">001101011010
                 <animateTransform type="translate"
-                  from="0 -900" to="0 1000"
-                  dur="11s" begin="-8s"
+                  from="0 600" to="0 -700"
+                  dur="7s" begin="-4s"
                   repeatCount="indefinite"/>
               </text>
 
-              <!-- Tambahkan sampai X=880 -->
-              <!-- (Total visual setara 500+ kolom) -->
+              <text x="180" y="500">101001010101
+                <animateTransform type="translate"
+                  from="0 700" to="0 -800"
+                  dur="9s" begin="-7s"
+                  repeatCount="indefinite"/>
+              </text>
 
+              <!-- Ulangi pola ini sampai x=880 -->
             </g>
 
-            <!-- DATA TRAFFIC (5000 FEELING, LOW COST) -->
-            <g stroke="#00ff66" stroke-width="0.5" opacity="0.3">
-              <line x1="0" y1="0" x2="900" y2="500">
-                <animateTransform type="translate"
-                  from="-900 0" to="900 0"
-                  dur="12s" repeatCount="indefinite"/>
-              </line>
-
-              <line x1="900" y1="0" x2="0" y2="500">
-                <animateTransform type="translate"
-                  from="900 0" to="-900 0"
-                  dur="10s" repeatCount="indefinite"/>
-              </line>
+            <!-- FACE (NO BINARY INSIDE) -->
+            <g clip-path="url(#faceClip)">
+              <rect x="0" y="0" width="900" height="500" fill="#050505"/>
             </g>
 
             <!-- HOODIE -->
             <path d="M320 380 Q450 100 580 380 Z"
-                  fill="#050505"
-                  stroke="#00ff66"
-                  stroke-width="1"/>
+                  fill="#070707"/>
 
             <!-- JOKER MASK -->
             <ellipse cx="450" cy="250" rx="130" ry="160"
-                     fill="#070707"
+                     fill="#080808"
                      stroke="#00ff66"
                      stroke-width="2"/>
 
@@ -132,21 +101,12 @@ jobs:
                   stroke-width="2"
                   fill="none"/>
 
-            <!-- GLITCH -->
-            <rect x="0" y="0" width="900" height="500" fill="none">
-              <animate attributeName="opacity"
-                values="0;0.08;0"
-                dur="0.2s"
-                begin="3s;8s;15s"
-                repeatCount="indefinite"/>
-            </rect>
-
             <!-- FOOTER -->
-            <text x="250" y="480"
+            <text x="260" y="480"
                   fill="#00ff66"
                   font-family="monospace"
                   font-size="16">
-              WELCOME, alvithops — ACCESS GRANTED
+              ACCESS GRANTED — alvithops
             </text>
 
           </svg>
