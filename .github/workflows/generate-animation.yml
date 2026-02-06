@@ -1,4 +1,4 @@
-name: Generate Hacker Matrix Animation FIXED
+name: Generate Hacker Binary Animation
 
 on:
   workflow_dispatch:
@@ -12,67 +12,67 @@ jobs:
       contents: write
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Generate SVG
         run: |
           mkdir -p dist
           cat << 'EOF' > dist/hacker-mask-animation.svg
-<svg width="900" height="500"
-     viewBox="0 0 900 500"
-     xmlns="http://www.w3.org/2000/svg">
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="900" height="500"
+     viewBox="0 0 900 500">
 
-  <rect width="100%" height="100%" fill="black"/>
+  <!-- BACKGROUND -->
+  <rect width="900" height="500" fill="black"/>
 
   <!-- MATRIX BINARY -->
-  <g font-family="monospace" font-size="18" fill="#00ff66">
+  <g font-family="monospace"
+     font-size="20"
+     fill="#00ff66">
 
-    <text x="20" y="0"><![CDATA[
-1010101010
-0101010101
-1100110011
-0011001100
-1010101010
-    ]]>
+    <!-- COLUMN 1 -->
+    <text x="40" y="0">
+      <tspan x="40" dy="20">1010101010</tspan>
+      <tspan x="40" dy="20">0101010101</tspan>
+      <tspan x="40" dy="20">1100110011</tspan>
+      <tspan x="40" dy="20">0011001100</tspan>
       <animateTransform
         attributeName="transform"
         type="translate"
-        from="0 -500"
+        from="0 -400"
         to="0 600"
         dur="6s"
         repeatCount="indefinite"/>
     </text>
 
-    <text x="60" y="0"><![CDATA[
-0101010101
-1010101010
-0011001100
-1100110011
-0101010101
-    ]]>
+    <!-- COLUMN 2 -->
+    <text x="90" y="0">
+      <tspan x="90" dy="20">0101010101</tspan>
+      <tspan x="90" dy="20">1010101010</tspan>
+      <tspan x="90" dy="20">0011001100</tspan>
+      <tspan x="90" dy="20">1100110011</tspan>
       <animateTransform
         attributeName="transform"
         type="translate"
-        from="0 -600"
-        to="0 700"
+        from="0 -500"
+        to="0 600"
         dur="8s"
         begin="-3s"
         repeatCount="indefinite"/>
     </text>
 
-    <text x="100" y="500"><![CDATA[
-1100110011
-0011001100
-1010101010
-0101010101
-1100110011
-    ]]>
+    <!-- COLUMN 3 (BOTTOM UP) -->
+    <text x="140" y="500">
+      <tspan x="140" dy="20">1100110011</tspan>
+      <tspan x="140" dy="20">0011001100</tspan>
+      <tspan x="140" dy="20">1010101010</tspan>
+      <tspan x="140" dy="20">0101010101</tspan>
       <animateTransform
         attributeName="transform"
         type="translate"
         from="0 600"
-        to="0 -700"
+        to="0 -500"
         dur="7s"
         begin="-5s"
         repeatCount="indefinite"/>
@@ -80,34 +80,33 @@ jobs:
 
   </g>
 
-  <!-- JOKER MASK -->
-  <ellipse cx="450" cy="250" rx="130" ry="160"
-           fill="#070707"
+  <!-- SIMPLE HOODIE -->
+  <path d="M300 420 Q450 120 600 420 Z"
+        fill="#050505"/>
+
+  <!-- FACE -->
+  <ellipse cx="450" cy="250"
+           rx="120" ry="150"
+           fill="#080808"
            stroke="#00ff66"
            stroke-width="2"/>
 
   <!-- EYES -->
-  <rect x="390" y="235" width="30" height="10" fill="#00ff66"/>
-  <rect x="480" y="235" width="30" height="10" fill="#00ff66"/>
-
-  <!-- SMILE -->
-  <path d="M390 300 Q450 340 510 300"
-        stroke="#00ff66"
-        stroke-width="2"
-        fill="none"/>
+  <rect x="400" y="240" width="25" height="8" fill="#00ff66"/>
+  <rect x="475" y="240" width="25" height="8" fill="#00ff66"/>
 
   <!-- FOOTER -->
-  <text x="260" y="480"
-        fill="#00ff66"
+  <text x="280" y="480"
         font-family="monospace"
-        font-size="16">
+        font-size="16"
+        fill="#00ff66">
     SYSTEM ONLINE — alvithops
   </text>
 
 </svg>
 EOF
 
-      - name: Publish SVG
+      - name: Publish
         uses: crazy-max/ghaction-github-pages@v3
         with:
           target_branch: output
