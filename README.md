@@ -19,6 +19,14 @@
 > *"Information wants to be free. We are the architects of the digital void. In a world of ones and zeros, we choose the path of the glitch. System integrity: COMPROMISED. Innovation: ENGAGED."*
 
 ---
+<div align="center">
+  <img src="https://raw.githubusercontent.com/alvithops/alvithops/output/weather.svg" alt="Weather Animation" width="100%" />
+
+  <br/>
+
+  <img src="https://raw.githubusercontent.com/alvithops/alvithops/output/snake.svg" alt="Snake Animation" width="100%" />
+</div>
+---
 
 ### [ > ] CORE_SKILLS.exe
 <p align="center">
