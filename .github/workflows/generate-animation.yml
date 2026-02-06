@@ -1,4 +1,4 @@
-name: Generate FIXED Hacker Matrix Animation
+name: Generate Hacker Matrix Animation FIXED
 
 on:
   workflow_dispatch:
@@ -12,125 +12,102 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Generate SVG (Matrix WORKING)
+      - name: Generate SVG
         run: |
           mkdir -p dist
           cat << 'EOF' > dist/hacker-mask-animation.svg
-          <svg width="900" height="500"
-               viewBox="0 0 900 500"
-               xmlns="http://www.w3.org/2000/svg">
+<svg width="900" height="500"
+     viewBox="0 0 900 500"
+     xmlns="http://www.w3.org/2000/svg">
 
-            <!-- BACKGROUND -->
-            <rect width="100%" height="100%" fill="black"/>
+  <rect width="100%" height="100%" fill="black"/>
 
-            <!-- MATRIX BINARY -->
-            <g font-family="monospace"
-               font-size="18"
-               fill="#00ff66">
+  <!-- MATRIX BINARY -->
+  <g font-family="monospace" font-size="18" fill="#00ff66">
 
-              <!-- COLUMN 1 -->
-              <text x="20" y="0">
+    <text x="20" y="0"><![CDATA[
 1010101010
 0101010101
 1100110011
 0011001100
 1010101010
-                <animateTransform
-                  attributeName="transform"
-                  type="translate"
-                  from="0 -500"
-                  to="0 600"
-                  dur="6s"
-                  repeatCount="indefinite"/>
-              </text>
+    ]]>
+      <animateTransform
+        attributeName="transform"
+        type="translate"
+        from="0 -500"
+        to="0 600"
+        dur="6s"
+        repeatCount="indefinite"/>
+    </text>
 
-              <!-- COLUMN 2 -->
-              <text x="60" y="0">
+    <text x="60" y="0"><![CDATA[
 0101010101
 1010101010
 0011001100
 1100110011
 0101010101
-                <animateTransform
-                  attributeName="transform"
-                  type="translate"
-                  from="0 -600"
-                  to="0 700"
-                  dur="8s"
-                  begin="-3s"
-                  repeatCount="indefinite"/>
-              </text>
+    ]]>
+      <animateTransform
+        attributeName="transform"
+        type="translate"
+        from="0 -600"
+        to="0 700"
+        dur="8s"
+        begin="-3s"
+        repeatCount="indefinite"/>
+    </text>
 
-              <!-- COLUMN 3 -->
-              <text x="100" y="0">
+    <text x="100" y="500"><![CDATA[
 1100110011
 0011001100
 1010101010
 0101010101
 1100110011
-                <animateTransform
-                  attributeName="transform"
-                  type="translate"
-                  from="0 -700"
-                  to="0 800"
-                  dur="7s"
-                  begin="-5s"
-                  repeatCount="indefinite"/>
-              </text>
+    ]]>
+      <animateTransform
+        attributeName="transform"
+        type="translate"
+        from="0 600"
+        to="0 -700"
+        dur="7s"
+        begin="-5s"
+        repeatCount="indefinite"/>
+    </text>
 
-              <!-- COLUMN 4 (BOTTOM → UP) -->
-              <text x="140" y="500">
-0011001100
-1010101010
-0101010101
-1100110011
-0011001100
-                <animateTransform
-                  attributeName="transform"
-                  type="translate"
-                  from="0 600"
-                  to="0 -700"
-                  dur="9s"
-                  begin="-4s"
-                  repeatCount="indefinite"/>
-              </text>
+  </g>
 
-            </g>
+  <!-- JOKER MASK -->
+  <ellipse cx="450" cy="250" rx="130" ry="160"
+           fill="#070707"
+           stroke="#00ff66"
+           stroke-width="2"/>
 
-            <!-- HOODIE -->
-            <path d="M320 380 Q450 100 580 380 Z"
-                  fill="#050505"/>
+  <!-- EYES -->
+  <rect x="390" y="235" width="30" height="10" fill="#00ff66"/>
+  <rect x="480" y="235" width="30" height="10" fill="#00ff66"/>
 
-            <!-- JOKER MASK -->
-            <ellipse cx="450" cy="250" rx="130" ry="160"
-                     fill="#070707"
-                     stroke="#00ff66"
-                     stroke-width="2"/>
+  <!-- SMILE -->
+  <path d="M390 300 Q450 340 510 300"
+        stroke="#00ff66"
+        stroke-width="2"
+        fill="none"/>
 
-            <!-- EYES -->
-            <rect x="390" y="235" width="30" height="10" fill="#00ff66"/>
-            <rect x="480" y="235" width="30" height="10" fill="#00ff66"/>
+  <!-- FOOTER -->
+  <text x="260" y="480"
+        fill="#00ff66"
+        font-family="monospace"
+        font-size="16">
+    SYSTEM ONLINE — alvithops
+  </text>
 
-            <!-- SMILE -->
-            <path d="M390 300 Q450 340 510 300"
-                  stroke="#00ff66"
-                  stroke-width="2"
-                  fill="none"/>
+</svg>
+EOF
 
-            <!-- FOOTER -->
-            <text x="260" y="480"
-                  fill="#00ff66"
-                  font-family="monospace"
-                  font-size="16">
-              SYSTEM ONLINE — alvithops
-            </text>
-
-          </svg>
-          EOF
-
-      - name: Publish
+      - name: Publish SVG
         uses: crazy-max/ghaction-github-pages@v3
         with:
           target_branch: output
