@@ -1,81 +1,136 @@
-name: Generate Hacker Animation
+name: Generate Hacker Binary Mask Animation
 
 on:
-  push:
-    branches: [ main ]
   workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Generate SVG animation
+      - name: Generate animated SVG
         run: |
           mkdir -p dist
+          cat << 'EOF' > dist/hacker-mask-animation.svg
+          <svg width="900" height="500"
+               viewBox="0 0 900 500"
+               xmlns="http://www.w3.org/2000/svg">
 
-          echo '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">' > dist/hacker-mask-animation.svg
-          echo '<rect width="100%" height="100%" fill="black"/>' >> dist/hacker-mask-animation.svg
+            <defs>
+              <!-- NEON GLOW -->
+              <filter id="neon">
+                <feGaussianBlur stdDeviation="1.5" result="blur"/>
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
 
-          # MASK WAJAH (AREA DALAM TOPENG)
-          cat <<'EOF' >> dist/hacker-mask-animation.svg
-          <defs>
-            <mask id="jokerMask">
-              <rect width="100%" height="100%" fill="black"/>
-              <ellipse cx="400" cy="300" rx="140" ry="190" fill="white"/>
-            </mask>
-          </defs>
+              <!-- JOKER MASK (NO DATA AREA) -->
+              <mask id="jokerMask">
+                <rect width="100%" height="100%" fill="white"/>
+                <ellipse cx="450" cy="240" rx="120" ry="150" fill="black"/>
+              </mask>
+
+              <!-- BINARY PATTERN -->
+              <pattern id="binaryPattern" width="120" height="120" patternUnits="userSpaceOnUse">
+                <text x="0" y="20" font-size="16" fill="#00ff66">10101001</text>
+                <text x="40" y="60" font-size="14" fill="#00ff66">01010110</text>
+                <text x="10" y="100" font-size="15" fill="#00ff66">11001010</text>
+              </pattern>
+
+              <!-- DATA STREAM PATTERN -->
+              <pattern id="dataLines" width="80" height="80" patternUnits="userSpaceOnUse">
+                <line x1="0" y1="0" x2="80" y2="80" stroke="#00ff66" stroke-width="0.6"/>
+                <line x1="80" y1="0" x2="0" y2="80" stroke="#00ff66" stroke-width="0.6"/>
+              </pattern>
+            </defs>
+
+            <!-- BACKGROUND -->
+            <rect width="100%" height="100%" fill="black"/>
+
+            <!-- BINARY RAIN (TOP ↔ DOWN) -->
+            <rect width="100%" height="100%"
+                  fill="url(#binaryPattern)"
+                  filter="url(#neon)"
+                  mask="url(#jokerMask)">
+              <animateTransform
+                type="translate"
+                from="0 -500"
+                to="0 500"
+                dur="18s"
+                repeatCount="indefinite"/>
+            </rect>
+
+            <!-- BINARY RAIN (BOTTOM ↔ UP) -->
+            <rect width="100%" height="100%"
+                  fill="url(#binaryPattern)"
+                  filter="url(#neon)"
+                  mask="url(#jokerMask)">
+              <animateTransform
+                type="translate"
+                from="0 500"
+                to="0 -500"
+                dur="22s"
+                repeatCount="indefinite"/>
+            </rect>
+
+            <!-- DATA TRAFFIC (ALL DIRECTIONS) -->
+            <rect width="100%" height="100%"
+                  fill="url(#dataLines)"
+                  opacity="0.35"
+                  filter="url(#neon)"
+                  mask="url(#jokerMask)">
+              <animateTransform
+                type="rotate"
+                from="0 450 250"
+                to="360 450 250"
+                dur="40s"
+                repeatCount="indefinite"/>
+            </rect>
+
+            <!-- DARK HOODIE -->
+            <path d="M330 390 Q450 480 570 390 L540 260 Q450 210 360 260 Z"
+                  fill="#050505"/>
+
+            <!-- JOKER FACE -->
+            <ellipse cx="450" cy="240" rx="120" ry="150"
+                     fill="#0a0a0a"
+                     stroke="#00ff66"
+                     stroke-width="2"/>
+
+            <!-- JOKER EYES -->
+            <rect x="395" y="215" width="30" height="8" fill="#00ff66"/>
+            <rect x="475" y="215" width="30" height="8" fill="#00ff66"/>
+
+            <!-- SMILE -->
+            <path d="M410 290 Q450 315 490 290"
+                  stroke="#00ff66"
+                  stroke-width="2"
+                  fill="none"/>
+
+            <!-- FOOTER -->
+            <text x="280" y="470"
+                  font-family="monospace"
+                  font-size="16"
+                  fill="#00ff66">
+              WELCOME, alvithops — SYSTEM ONLINE
+            </text>
+
+          </svg>
           EOF
 
-          # === AREA WAJAH (HOODIE + JOKER) ===
-          cat <<'EOF' >> dist/hacker-mask-animation.svg
-          <g mask="url(#jokerMask)">
-            <ellipse cx="400" cy="300" rx="140" ry="190" fill="#111"/>
-            <path d="M260 520 Q400 380 540 520" fill="#0a0a0a"/>
-            <ellipse cx="350" cy="270" rx="18" ry="8" fill="#00ff66"/>
-            <ellipse cx="450" cy="270" rx="18" ry="8" fill="#00ff66"/>
-            <path d="M340 340 Q400 370 460 340" stroke="#00ff66" stroke-width="4" fill="none"/>
-          </g>
-          EOF
-
-          # === BINARY RAIN (HIJAU NEON, DI DALAM WAJAH) ===
-          echo '<g mask="url(#jokerMask)" font-family="monospace" font-size="14" fill="#00ff66" opacity="0.85">' >> dist/hacker-mask-animation.svg
-          for i in {1..180}; do
-            x=$((RANDOM % 800))
-            y=$((RANDOM % 600))
-            dur=$((5 + RANDOM % 10))
-            bin=$(shuf -i0-1 -n20 | tr -d '\n')
-            echo "<text x=\"$x\" y=\"-$y\">$bin
-              <animateTransform type=\"translate\" from=\"0 -700\" to=\"0 900\" dur=\"${dur}s\" repeatCount=\"indefinite\"/>
-            </text>" >> dist/hacker-mask-animation.svg
-          done
-          echo '</g>' >> dist/hacker-mask-animation.svg
-
-          # === LINTAS DATA 5000 (DI LUAR TOPENG) ===
-          echo '<g mask="none" stroke="#00ff66" stroke-width="1" opacity="0.15">' >> dist/hacker-mask-animation.svg
-          for i in {1..5000}; do
-            x1=$((RANDOM % 800))
-            y1=$((RANDOM % 600))
-            x2=$((RANDOM % 800))
-            y2=$((RANDOM % 600))
-            dx=$((RANDOM % 400 - 200))
-            dy=$((RANDOM % 400 - 200))
-            dur=$((4 + RANDOM % 12))
-            echo "<line x1=\"$x1\" y1=\"$y1\" x2=\"$x2\" y2=\"$y2\">
-              <animateTransform type=\"translate\" from=\"0 0\" to=\"$dx $dy\" dur=\"${dur}s\" repeatCount=\"indefinite\"/>
-            </line>" >> dist/hacker-mask-animation.svg
-          done
-          echo '</g>' >> dist/hacker-mask-animation.svg
-
-          echo '</svg>' >> dist/hacker-mask-animation.svg
-
-      - name: Publish SVG
-        run: |
-          git checkout --orphan output
-          git rm -rf .
-          mv dist/hacker-mask-animation.svg .
-          git add hacker-mask-animation.svg
-          git commit -m "Generate hacker animation"
-          git push -f origin output
+      - name: Publish to output branch
+        uses: crazy-max/ghaction-github-pages@v3
+        with:
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
