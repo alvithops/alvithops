@@ -1,29 +1,26 @@
-name: Hacker Animation Update
+name: Update Hacker Animation
 
 on:
   schedule:
     - cron: '*/30 * * * *' # Berjalan otomatis tiap 30 menit
-  workflow_dispatch:      # Tombol manual agar bisa kamu klik kapan saja
+  workflow_dispatch:      # Tombol manual di tab Actions
 
 jobs:
-  hacker_process:
+  hacker_logic:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - name: Checkout Code
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: System Update Logic
+      - name: Randomize Hacker Stats
         run: |
-          # Skrip Python untuk mengacak angka di README agar terlihat 'live'
           python -c "
           import re, random, datetime
-
           with open('README.md', 'r', encoding='utf-8') as f:
               content = f.read()
 
-          # Update Persentase
           def update_bar(match):
               label = match.group(1)
               val = random.randint(10, 100)
@@ -31,19 +28,17 @@ jobs:
               return f'• {label:<18} {bar} {val}%'
 
           content = re.sub(r'• ([A-Z_]+)\s+[█▒]+\s+\d+%', update_bar, content)
-          
-          # Update Timestamp (Waktu)
           now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-          content = re.sub(r'LAST_SYNC: .*', f'LAST_SYNC: {now} UTC', content)
+          content = re.sub(r'TIME: .*', f'TIME: [{now} UTC]', content)
 
           with open('README.md', 'w', encoding='utf-8') as f:
               f.write(content)
           "
 
-      - name: Deploy to Mainframe
+      - name: Push Updates
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add README.md
-          git diff-index --quiet HEAD || git commit -m "system: security layers updated"
+          git diff-index --quiet HEAD || git commit -m "system: status updated"
           git push
