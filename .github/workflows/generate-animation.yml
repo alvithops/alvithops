@@ -1,4 +1,4 @@
-name: Generate Advanced Hacker Animation FIXED
+name: Generate FIXED Hacker Matrix Animation
 
 on:
   workflow_dispatch:
@@ -14,80 +14,98 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Generate SVG
+      - name: Generate SVG (Matrix WORKING)
         run: |
           mkdir -p dist
           cat << 'EOF' > dist/hacker-mask-animation.svg
-          <svg width="900" height="500" viewBox="0 0 900 500"
+          <svg width="900" height="500"
+               viewBox="0 0 900 500"
                xmlns="http://www.w3.org/2000/svg">
-
-            <defs>
-              <!-- FACE CLIP (BINARY EXCLUDED HERE) -->
-              <clipPath id="faceClip">
-                <ellipse cx="450" cy="250" rx="130" ry="160"/>
-              </clipPath>
-            </defs>
 
             <!-- BACKGROUND -->
             <rect width="100%" height="100%" fill="black"/>
 
-            <!-- MATRIX BINARY (OUTSIDE FACE) -->
+            <!-- MATRIX BINARY -->
             <g font-family="monospace"
-               font-size="20"
+               font-size="18"
                fill="#00ff66">
 
-              <!-- 30 DENSE COLUMNS (VISUALLY MASSIVE) -->
-              <!-- TOP → DOWN -->
-              <text x="20" y="0">101010101010
-                <animateTransform type="translate"
-                  from="0 -500" to="0 600"
-                  dur="6s" begin="-3s"
+              <!-- COLUMN 1 -->
+              <text x="20" y="0">
+1010101010
+0101010101
+1100110011
+0011001100
+1010101010
+                <animateTransform
+                  attributeName="transform"
+                  type="translate"
+                  from="0 -500"
+                  to="0 600"
+                  dur="6s"
                   repeatCount="indefinite"/>
               </text>
 
-              <text x="60" y="0">010101010101
-                <animateTransform type="translate"
-                  from="0 -600" to="0 700"
-                  dur="8s" begin="-6s"
+              <!-- COLUMN 2 -->
+              <text x="60" y="0">
+0101010101
+1010101010
+0011001100
+1100110011
+0101010101
+                <animateTransform
+                  attributeName="transform"
+                  type="translate"
+                  from="0 -600"
+                  to="0 700"
+                  dur="8s"
+                  begin="-3s"
                   repeatCount="indefinite"/>
               </text>
 
-              <text x="100" y="0">110010101100
-                <animateTransform type="translate"
-                  from="0 -700" to="0 800"
-                  dur="5s" begin="-1s"
+              <!-- COLUMN 3 -->
+              <text x="100" y="0">
+1100110011
+0011001100
+1010101010
+0101010101
+1100110011
+                <animateTransform
+                  attributeName="transform"
+                  type="translate"
+                  from="0 -700"
+                  to="0 800"
+                  dur="7s"
+                  begin="-5s"
                   repeatCount="indefinite"/>
               </text>
 
-              <text x="140" y="500">001101011010
-                <animateTransform type="translate"
-                  from="0 600" to="0 -700"
-                  dur="7s" begin="-4s"
+              <!-- COLUMN 4 (BOTTOM → UP) -->
+              <text x="140" y="500">
+0011001100
+1010101010
+0101010101
+1100110011
+0011001100
+                <animateTransform
+                  attributeName="transform"
+                  type="translate"
+                  from="0 600"
+                  to="0 -700"
+                  dur="9s"
+                  begin="-4s"
                   repeatCount="indefinite"/>
               </text>
 
-              <text x="180" y="500">101001010101
-                <animateTransform type="translate"
-                  from="0 700" to="0 -800"
-                  dur="9s" begin="-7s"
-                  repeatCount="indefinite"/>
-              </text>
-
-              <!-- Ulangi pola ini sampai x=880 -->
-            </g>
-
-            <!-- FACE (NO BINARY INSIDE) -->
-            <g clip-path="url(#faceClip)">
-              <rect x="0" y="0" width="900" height="500" fill="#050505"/>
             </g>
 
             <!-- HOODIE -->
             <path d="M320 380 Q450 100 580 380 Z"
-                  fill="#070707"/>
+                  fill="#050505"/>
 
             <!-- JOKER MASK -->
             <ellipse cx="450" cy="250" rx="130" ry="160"
-                     fill="#080808"
+                     fill="#070707"
                      stroke="#00ff66"
                      stroke-width="2"/>
 
@@ -106,7 +124,7 @@ jobs:
                   fill="#00ff66"
                   font-family="monospace"
                   font-size="16">
-              ACCESS GRANTED — alvithops
+              SYSTEM ONLINE — alvithops
             </text>
 
           </svg>
