@@ -1,25 +1,49 @@
-animation:
-  metadata:
-    title: "Hacker System Dashboard"
-    duration: 60
-  system_boot:
-    animation_spec:
-      duration: 5
-    keyframes:
-      - time: 0
-        progress: 0
-      - time: 2
-        progress: 45
-      - time: 5
-        progress: 100
-  live_feed:
-    timelines: ["NETWORK_TRAFFIC", "ENCRYPTION_KEY", "GEOLOCATION"]
-  active_processes:
-    processes: ["Kernel", "UI_Render", "Socket_Listener", "Auth_Service"]
-  dynamic_elements:
-    countdown:
-      enabled: true
-  rendering:
-    effects_enabled: ["glitch", "scanlines", "terminal_flicker"]
-  interpolation:
-    linear: true
+name: Hacker Animation Update
+
+on:
+  schedule:
+    - cron: '*/30 * * * *' # Berjalan otomatis tiap 30 menit
+  workflow_dispatch:      # Tombol manual agar bisa kamu klik kapan saja
+
+jobs:
+  hacker_process:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: System Update Logic
+        run: |
+          # Skrip Python untuk mengacak angka di README agar terlihat 'live'
+          python -c "
+          import re, random, datetime
+
+          with open('README.md', 'r', encoding='utf-8') as f:
+              content = f.read()
+
+          # Update Persentase
+          def update_bar(match):
+              label = match.group(1)
+              val = random.randint(10, 100)
+              bar = '█' * (val // 10) + '▒' * (10 - (val // 10))
+              return f'• {label:<18} {bar} {val}%'
+
+          content = re.sub(r'• ([A-Z_]+)\s+[█▒]+\s+\d+%', update_bar, content)
+          
+          # Update Timestamp (Waktu)
+          now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+          content = re.sub(r'LAST_SYNC: .*', f'LAST_SYNC: {now} UTC', content)
+
+          with open('README.md', 'w', encoding='utf-8') as f:
+              f.write(content)
+          "
+
+      - name: Deploy to Mainframe
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git diff-index --quiet HEAD || git commit -m "system: security layers updated"
+          git push
