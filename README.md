@@ -36,6 +36,32 @@
 </p>
 
 ---
+# 👤 alvithops
+
+![Masked Hacker](./hacker-mask-animation.svg)
+
+## 🕶️ Tentang
+Profil ini menampilkan **animasi hacker bertopeng** berdurasi **1 menit**, bergerak secara halus dengan efek glitch dan matrix-style background.
+
+Animasi dikontrol melalui file konfigurasi:
+- `alvithops.yaml`
+
+## ⚙️ Spesifikasi Animasi
+- Durasi: **60 detik (looping)**
+- Gaya: Hacker bertopeng (neon, glitch)
+- Format output: **SVG animated**
+- Cocok untuk: GitHub Profile, landing page, banner
+
+## 📂 Struktur File
+---
+## 🔗 Profil
+- GitHub: https://github.com/alvithops
+
+---
+
+🟢 *System status: ONLINE*
+---
+
 ### [ > ] SYSTEM_DASHBOARD.exe
 
 ```text
