@@ -13,8 +13,6 @@
   <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&color=00FF41&center=true&vCenter=true&width=435&lines=Initialing+System...;Loading+Neural+Networks...;Accessing+Mainframe...;Welcome+to+Alvithops+Console;" alt="Typing SVG" />
 </a>
 
-<img src="https://raw.githubusercontent.com/alvithops/alvithops/output/github-contribution-grid-snake.gif" alt="Snake Animation" />
-
 ---
 
 ### [ > ] HACKER_KENA HACK
@@ -65,7 +63,18 @@ LOG_CLEANER       | ███▒▒▒▒▒▒▒ | 30%
 ---
 
 <div align="center">
+## 🐍 Contribution Snake
 
+<div align="center">
+  <img src="https://raw.githubusercontent.com/alvithops/alvithops/output/github-contribution-grid-snake-dark.svg" alt="Snake animation" />
+</div>
+
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="700">
+</div>
+<div align="center">
+  <h3>💫 "Strive for progress, not perfection."</h3>
+</div>
 
 
 
