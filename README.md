@@ -42,31 +42,21 @@
 ## 🕐 ANIMASI HACKER - 60 DETIK AKTIF
 
 ```bash
+# ⚡ ALVITHOPS MAINFRAME
+
+```text
 ╔══════════════════════════════════════════╗
 ║       REAL-TIME HACKER ANIMATION        ║
 ║         DURATION: 60 SECONDS            ║
 ╚══════════════════════════════════════════╝
 
-[SYSTEM BOOT] ████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ 30%
-
 $> CONNECTING TO MAINFRAME...
 [+] TARGET: ALVITHOPS_SYSTEM
 [+] STATUS: ENCRYPTED
-[+] TIME: [DYNAMIC COUNTDOWN]
-
-[LIVE FEED]
-════════════════════════════════════════════
-00:60 ████████████████████████████████████
-00:45 ███████████████████████▒▒▒▒▒▒▒▒▒▒▒▒▒
-00:30 ███████████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-00:15 ███████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-00:00 ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-════════════════════════════════════════════
+[+] TIME: [2026-02-06 12:00:00 UTC]
 
 [ACTIVE PROCESSES]
-• DATA_EXFILTRATION ███████▒▒▒ 70%
-• ENCRYPTION_LAYER █████▒▒▒▒▒ 50%
-• STEALTH_MODE ██████████ 100%
-• LOG_CLEANER ███▒▒▒▒▒▒▒ 30%
-
-$> ANIMATION_COMPLETE_IN: [COUNTING...]
+• DATA_EXFILTRATION  ███████▒▒▒ 70%
+• ENCRYPTION_LAYER   █████▒▒▒▒▒ 50%
+• STEALTH_MODE       ██████████ 100%
+• LOG_CLEANER        ███▒▒▒▒▒▒▒ 30%
