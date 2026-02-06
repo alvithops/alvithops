@@ -1,0 +1,50 @@
+
+profile:
+  username: alvithops
+  title: "Masked Hacker"
+  theme: dark
+
+animation:
+  type: svg-motion
+  duration_seconds: 60
+  loop: true
+  fps: 30
+
+character:
+  model: hacker_mask
+  mask:
+    color: black
+    accent: neon-green
+    glow: true
+  hoodie:
+    color: dark-gray
+
+movement:
+  head:
+    sway: true
+    angle_range: [-8, 8]
+    speed: slow
+  body:
+    idle_shift: true
+    intensity: low
+  background_effect:
+    matrix_rain: true
+    glitch: true
+    glitch_interval_seconds: 6
+
+text_overlay:
+  enabled: true
+  content:
+    - "ACCESS GRANTED"
+    - "WELCOME, alvithops"
+    - "SYSTEM ONLINE"
+  font: monospace
+  color: "#00ff88"
+  typing_effect: true
+
+export:
+  output: hacker-mask-animation.svg
+  link_readme: README.md
+  github_profile: https://github.com/alvithops
+
+
