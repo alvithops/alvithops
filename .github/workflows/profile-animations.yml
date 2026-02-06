@@ -2,8 +2,8 @@ name: Generate Weather and River Animations
 
 on:
   schedule:
-    - cron: "0 0 * * *" # Berjalan otomatis setiap hari
-  workflow_dispatch: # Memungkinkan menjalankan manual
+    - cron: "0 0 * * *"
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -19,46 +19,60 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # 1. Generate Weather Animation (Clouds, Rain, Lightning)
+      # 1. Generate Heavy Weather Animation (Larger Clouds & More Rain)
       - name: generate-weather-svg
         run: |
           mkdir -p dist
           cat << 'EOF' > dist/weather.svg
           <svg width="600" height="200" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
             <style>
-              .cloud { fill: #ecf0f1; }
-              .rain { stroke: #3498db; stroke-width: 2; stroke-linecap: round; animation: fall 0.8s linear infinite; }
+              .cloud { fill: #ecf0f1; filter: drop-shadow(0px 3px 2px rgba(0,0,0,0.3)); }
+              .rain { stroke: #3498db; stroke-width: 1.5; stroke-linecap: round; animation: fall 0.6s linear infinite; }
               .bolt { fill: #f1c40f; opacity: 0; animation: flash 3s steps(1) infinite; }
-              @keyframes fall { to { transform: translateY(100px); } }
+              @keyframes fall { to { transform: translateY(120px); } }
               @keyframes flash { 0%, 90% { opacity: 0; } 92% { opacity: 1; } 94% { opacity: 0; } 96% { opacity: 1; } 98% { opacity: 0; } }
             </style>
             <rect width="100%" height="100%" fill="#0d1117" />
-            <g transform="translate(50, 40)">
-              <path class="cloud" d="M25 20a15 15 0 1 1 0 30h-10a15 15 0 1 1 0-30z" />
-              <line class="rain" x1="20" y1="55" x2="20" y2="65" />
-              <line class="rain" x1="35" y1="60" x2="35" y2="70" style="animation-delay: 0.2s" />
+            
+            <g transform="translate(40, 30)">
+              <path class="cloud" d="M40 30a25 25 0 1 1 0 50h-20a25 25 0 1 1 0-50z" />
+              <line class="rain" x1="15" y1="85" x2="15" y2="100" />
+              <line class="rain" x1="25" y1="90" x2="25" y2="105" style="animation-delay: 0.2s" />
+              <line class="rain" x1="35" y1="85" x2="35" y2="100" style="animation-delay: 0.4s" />
+              <line class="rain" x1="45" y1="95" x2="45" y2="110" style="animation-delay: 0.1s" />
             </g>
-            <g transform="translate(200, 40)">
-              <path class="cloud" d="M25 20a15 15 0 1 1 0 30h-10a15 15 0 1 1 0-30z" />
-              <line class="rain" x1="20" y1="55" x2="20" y2="65" style="animation-delay: 0.4s" />
-              <line class="rain" x1="35" y1="60" x2="35" y2="70" style="animation-delay: 0.1s" />
-              <polygon class="bolt" points="25,55 15,75 25,75 20,95 35,70 25,70 30,55" />
+
+            <g transform="translate(180, 30)">
+              <path class="cloud" d="M40 30a25 25 0 1 1 0 50h-20a25 25 0 1 1 0-50z" />
+              <line class="rain" x1="10" y1="85" x2="10" y2="100" style="animation-delay: 0.1s" />
+              <line class="rain" x1="20" y1="95" x2="20" y2="110" style="animation-delay: 0.3s" />
+              <line class="rain" x1="30" y1="80" x2="30" y2="95" style="animation-delay: 0.5s" />
+              <line class="rain" x1="40" y1="90" x2="40" y2="105" style="animation-delay: 0.2s" />
+              <line class="rain" x1="50" y1="85" x2="50" y2="100" style="animation-delay: 0.4s" />
+              <polygon class="bolt" points="30,85 20,105 30,105 25,125 40,100 30,100 35,85" />
             </g>
-            <g transform="translate(350, 40)">
-              <path class="cloud" d="M25 20a15 15 0 1 1 0 30h-10a15 15 0 1 1 0-30z" />
-              <line class="rain" x1="20" y1="55" x2="20" y2="65" style="animation-delay: 0.3s" />
-              <line class="rain" x1="35" y1="60" x2="35" y2="70" style="animation-delay: 0.5s" />
+
+            <g transform="translate(340, 30)">
+              <path class="cloud" d="M40 30a25 25 0 1 1 0 50h-20a25 25 0 1 1 0-50z" />
+              <line class="rain" x1="15" y1="85" x2="15" y2="100" style="animation-delay: 0.3s" />
+              <line class="rain" x1="25" y1="95" x2="25" y2="110" style="animation-delay: 0.1s" />
+              <line class="rain" x1="35" y1="85" x2="35" y2="100" style="animation-delay: 0.5s" />
+              <line class="rain" x1="45" y1="90" x2="45" y2="105" style="animation-delay: 0.2s" />
             </g>
-            <g transform="translate(500, 40)">
-              <path class="cloud" d="M25 20a15 15 0 1 1 0 30h-10a15 15 0 1 1 0-30z" />
-              <line class="rain" x1="20" y1="55" x2="20" y2="65" style="animation-delay: 0.1s" />
-              <line class="rain" x1="35" y1="60" x2="35" y2="70" style="animation-delay: 0.6s" />
-              <polygon class="bolt" points="25,55 15,75 25,75 20,95 35,70 25,70 30,55" style="animation-delay: 1.5s" />
+
+            <g transform="translate(500, 30)">
+              <path class="cloud" d="M40 30a25 25 0 1 1 0 50h-20a25 25 0 1 1 0-50z" />
+              <line class="rain" x1="10" y1="85" x2="10" y2="100" style="animation-delay: 0.6s" />
+              <line class="rain" x1="20" y1="90" x2="20" y2="105" style="animation-delay: 0.2s" />
+              <line class="rain" x1="30" y1="85" x2="30" y2="100" style="animation-delay: 0.4s" />
+              <line class="rain" x1="40" y1="95" x2="40" y2="110" style="animation-delay: 0.1s" />
+              <line class="rain" x1="50" y1="80" x2="50" y2="95" style="animation-delay: 0.5s" />
+              <polygon class="bolt" points="30,85 20,105 30,105 25,125 40,100 30,100 35,85" style="animation-delay: 1.5s" />
             </g>
           </svg>
           EOF
 
-      # 2. Generate River Animation (Flowing Water)
+      # 2. Generate River Animation
       - name: generate-river-svg
         run: |
           cat << 'EOF' > dist/river.svg
@@ -80,7 +94,7 @@ jobs:
           </svg>
           EOF
 
-      # 3. Push all files to "output" branch
+      # 3. Push to Output Branch
       - name: push-to-output
         uses: crazy-max/ghaction-github-pages@v4
         with:
