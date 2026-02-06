@@ -1,9 +1,7 @@
-name: Generate Hacker Binary Animation
+name: Generate Binary Animation GIF
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 */6 * * *"
 
 jobs:
   build:
@@ -12,104 +10,31 @@ jobs:
       contents: write
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Generate SVG
+      - name: Install ImageMagick
+        run: sudo apt-get update && sudo apt-get install -y imagemagick
+
+      - name: Generate frames
         run: |
-          mkdir -p dist
-          cat << 'EOF' > dist/hacker-mask-animation.svg
-<svg xmlns="http://www.w3.org/2000/svg"
-     width="900" height="500"
-     viewBox="0 0 900 500">
+          mkdir frames
+          for i in $(seq 0 19); do
+            convert -size 900x500 xc:black \
+              -fill '#00ff66' -font Courier -pointsize 20 \
+              -draw "text 40,$((i*25%500)) '10101010101010101010'" \
+              -draw "text 90,$(((i*35+100)%500)) '01010101010101010101'" \
+              -draw "text 140,$(((i*45+200)%500)) '11001100110011001100'" \
+              frames/frame_$i.png
+          done
 
-  <!-- BACKGROUND -->
-  <rect width="900" height="500" fill="black"/>
+      - name: Create GIF
+        run: |
+          convert -delay 8 -loop 0 frames/frame_*.png dist.gif
 
-  <!-- MATRIX BINARY -->
-  <g font-family="monospace"
-     font-size="20"
-     fill="#00ff66">
-
-    <!-- COLUMN 1 -->
-    <text x="40" y="0">
-      <tspan x="40" dy="20">1010101010</tspan>
-      <tspan x="40" dy="20">0101010101</tspan>
-      <tspan x="40" dy="20">1100110011</tspan>
-      <tspan x="40" dy="20">0011001100</tspan>
-      <animateTransform
-        attributeName="transform"
-        type="translate"
-        from="0 -400"
-        to="0 600"
-        dur="6s"
-        repeatCount="indefinite"/>
-    </text>
-
-    <!-- COLUMN 2 -->
-    <text x="90" y="0">
-      <tspan x="90" dy="20">0101010101</tspan>
-      <tspan x="90" dy="20">1010101010</tspan>
-      <tspan x="90" dy="20">0011001100</tspan>
-      <tspan x="90" dy="20">1100110011</tspan>
-      <animateTransform
-        attributeName="transform"
-        type="translate"
-        from="0 -500"
-        to="0 600"
-        dur="8s"
-        begin="-3s"
-        repeatCount="indefinite"/>
-    </text>
-
-    <!-- COLUMN 3 (BOTTOM UP) -->
-    <text x="140" y="500">
-      <tspan x="140" dy="20">1100110011</tspan>
-      <tspan x="140" dy="20">0011001100</tspan>
-      <tspan x="140" dy="20">1010101010</tspan>
-      <tspan x="140" dy="20">0101010101</tspan>
-      <animateTransform
-        attributeName="transform"
-        type="translate"
-        from="0 600"
-        to="0 -500"
-        dur="7s"
-        begin="-5s"
-        repeatCount="indefinite"/>
-    </text>
-
-  </g>
-
-  <!-- SIMPLE HOODIE -->
-  <path d="M300 420 Q450 120 600 420 Z"
-        fill="#050505"/>
-
-  <!-- FACE -->
-  <ellipse cx="450" cy="250"
-           rx="120" ry="150"
-           fill="#080808"
-           stroke="#00ff66"
-           stroke-width="2"/>
-
-  <!-- EYES -->
-  <rect x="400" y="240" width="25" height="8" fill="#00ff66"/>
-  <rect x="475" y="240" width="25" height="8" fill="#00ff66"/>
-
-  <!-- FOOTER -->
-  <text x="280" y="480"
-        font-family="monospace"
-        font-size="16"
-        fill="#00ff66">
-    SYSTEM ONLINE — alvithops
-  </text>
-
-</svg>
-EOF
-
-      - name: Publish
-        uses: crazy-max/ghaction-github-pages@v3
-        with:
-          target_branch: output
-          build_dir: dist
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit GIF
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add dist.gif
+          git commit -m "update binary animation" || true
+          git push
