@@ -1,9 +1,9 @@
-name: Generate Profile Animations
+name: Generate Weather and River Animations
 
 on:
-  schedule: # Berjalan setiap 24 jam
-    - cron: "0 0 * * *" 
-  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *" # Berjalan otomatis setiap hari
+  workflow_dispatch: # Memungkinkan menjalankan manual
   push:
     branches:
       - main
@@ -16,15 +16,10 @@ jobs:
     timeout-minutes: 5
     
     steps:
-      # 1. Generate Snake Animation
-      - name: generate-snake-svg
-        uses: Platane/snk/svg-only@v3
-        with:
-          github_user_name: alvithops
-          outputs: |
-            dist/snake.svg?palette=github-dark&color_snake=#7bc96f&color_dots=#161b22,#0e4429,#26a641,#39d353
-            
-      # 2. Generate Weather Animation (Clouds & Rain & Lightning)
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # 1. Generate Weather Animation (Clouds, Rain, Lightning)
       - name: generate-weather-svg
         run: |
           mkdir -p dist
@@ -37,9 +32,7 @@ jobs:
               @keyframes fall { to { transform: translateY(100px); } }
               @keyframes flash { 0%, 90% { opacity: 0; } 92% { opacity: 1; } 94% { opacity: 0; } 96% { opacity: 1; } 98% { opacity: 0; } }
             </style>
-            
             <rect width="100%" height="100%" fill="#0d1117" />
-
             <g transform="translate(50, 40)">
               <path class="cloud" d="M25 20a15 15 0 1 1 0 30h-10a15 15 0 1 1 0-30z" />
               <line class="rain" x1="20" y1="55" x2="20" y2="65" />
@@ -65,7 +58,29 @@ jobs:
           </svg>
           EOF
 
-      # 3. Push to Output Branch
+      # 2. Generate River Animation (Flowing Water)
+      - name: generate-river-svg
+        run: |
+          cat << 'EOF' > dist/river.svg
+          <svg width="700" height="150" viewBox="0 0 700 150" xmlns="http://www.w3.org/2000/svg">
+            <style>
+              .river-bg { fill: #0d1117; }
+              .wave { fill: #2c3e50; opacity: 0.7; animation: flow 5s linear infinite; }
+              .wave-overlay { fill: #3498db; opacity: 0.5; animation: flow 5s linear infinite reverse; }
+              @keyframes flow { from { transform: translateX(0); } to { transform: translateX(50px); } }
+            </style>
+            <rect x="0" y="0" width="700" height="150" class="river-bg" />
+            <path id="riverPath" fill="none" d="M0,75 C100,60 200,90 300,75 C400,60 500,90 600,75 C650,70 700,75 700,75 L700,150 L0,150 Z" />
+            <g clip-path="url(#riverClip)">
+              <path class="wave" d="M-50,80 C0,65 100,95 200,80 C300,65 400,95 500,80 C600,65 700,95 750,80 L750,150 L-50,150 Z" />
+              <path class="wave" d="M-10,70 C40,55 140,85 240,70 C340,55 440,85 540,70 C640,55 740,85 790,70 L790,150 L-10,150 Z" style="animation-delay: -2s; animation-duration: 6s;" />
+              <path class="wave-overlay" d="M-20,78 C30,63 130,93 230,78 C330,63 430,93 530,78 C630,63 730,93 780,78 L780,150 L-20,150 Z" style="animation-delay: -1s; animation-duration: 4s;" />
+            </g>
+            <defs><clipPath id="riverClip"><use href="#riverPath" /></clipPath></defs>
+          </svg>
+          EOF
+
+      # 3. Push all files to "output" branch
       - name: push-to-output
         uses: crazy-max/ghaction-github-pages@v4
         with:
