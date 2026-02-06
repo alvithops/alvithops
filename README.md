@@ -24,7 +24,7 @@
 
   <br/>
 
-  <img src="https://raw.githubusercontent.com/alvithops/alvithops/output/snake.svg" alt="Snake Animation" width="100%" />
+  <img src="https://raw.githubusercontent.com/alvithops/alvithops/output/river.svg" alt="River Animation" width="100%" />
 </div>
 ---
 
