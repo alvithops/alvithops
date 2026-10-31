@@ -42,12 +42,6 @@
 
 ---
 
-### 📈 Contribution Graph & Activity
-
-![GitHub Activity Graph](https://activity-graph.herokuapp.com/graph?username=alvithops&theme=tokyo-night&area=true&hide_border=true)
-
----
----
 
 ### [ > ] CORE_SKILLS.exe
 <p align="center">
