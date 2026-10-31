@@ -23,15 +23,6 @@
 
 <div align="center">
 
-  <!-- Top Languages Card -->
-  <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=alvithops&layout=compact&theme=tokyonight&hide=html,css" alt="Top Languages" />
-
-</div>
-
-<br/>
-
-<div align="center">
-
   <!-- Streak Stats Card -->
   <img src="https://github-readme-streak-stats.herokuapp.com/?user=alvithops&theme=tokyonight" alt="GitHub Streak" />
 
