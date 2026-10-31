@@ -43,12 +43,12 @@
 ---
 
 
-### [ > ] CORE_SKILLS.exe
+### [ <*_*> ] MY_SKILLS
 <p align="center">
   <img src="https://skillicons.dev/icons?i=html,css,js,php,laravel,mysql&theme=dark" />
 </p>
 
-### [ > ] TOOLS_OF_THE_TRADE.sh
+### [ > ] TOOLS
 <p align="center">
   <a href="#"><img src="https://img.shields.io/badge/Terminal-Alacritty-00FF41?style=for-the-badge&logo=alacritty&logoColor=white" /></a>
   <a href="#"><img src="https://img.shields.io/badge/Editor-VSCode-00FF41?style=for-the-badge&logo=visual-studio-code&logoColor=white" /></a>
