@@ -64,10 +64,6 @@
 
 ---
 
-![Hacker Animation](https://raw.githubusercontent.com/alvithops/alvithops/output/hacker-mask-animation.svg)
-
----
-
 ### [ > ] SYSTEM_DASHBOARD.exe
 
 ```text
