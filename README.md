@@ -19,7 +19,34 @@
 > *"Information wants to be free. We are the architects of the digital void. In a world of ones and zeros, we choose the path of the glitch. System integrity: COMPROMISED. Innovation: ENGAGED."*
 
 ---
+### 📊 GitHub Stats & Overview
 
+<div align="center">
+
+  <!-- GitHub Stats Card -->
+  <img height="180em" src="https://github-readme-stats.vercel.app/api?username=alvithops&show_icons=true&theme=tokyonight&include_all_commits=true&count_private=true" alt="alvithops's GitHub Stats" />
+
+  <!-- Top Languages Card -->
+  <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=alvithops&layout=compact&theme=tokyonight&hide=html,css" alt="Top Languages" />
+
+</div>
+
+<br/>
+
+<div align="center">
+
+  <!-- Streak Stats Card -->
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=alvithops&theme=tokyonight" alt="GitHub Streak" />
+
+</div>
+
+---
+
+### 📈 Contribution Graph & Activity
+
+![GitHub Activity Graph](https://activity-graph.herokuapp.com/graph?username=alvithops&theme=tokyo-night&area=true&hide_border=true)
+
+---
 ---
 
 ### [ > ] CORE_SKILLS.exe
