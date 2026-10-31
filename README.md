@@ -23,9 +23,6 @@
 
 <div align="center">
 
-  <!-- GitHub Stats Card -->
-  <img height="180em" src="https://github-readme-stats.vercel.app/api?username=alvithops&show_icons=true&theme=tokyonight&include_all_commits=true&count_private=true" alt="alvithops's GitHub Stats" />
-
   <!-- Top Languages Card -->
   <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=alvithops&layout=compact&theme=tokyonight&hide=html,css" alt="Top Languages" />
 
