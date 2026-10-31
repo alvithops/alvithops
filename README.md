@@ -19,6 +19,14 @@
 > *"Information wants to be free. We are the architects of the digital void. In a world of ones and zeros, we choose the path of the glitch. System integrity: COMPROMISED. Innovation: ENGAGED."*
 
 ---
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/alvithops/alvithops/gitascii/profiles/default/dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/alvithops/alvithops/gitascii/profiles/default/light.svg">
+  <img alt="GitAscii Profile" src="https://raw.githubusercontent.com/alvithops/alvithops/gitascii/profiles/default/dark.svg" width="100%">
+</picture>
+
+---
+
 ### 📊 GitHub Stats & Overview
 
 <div align="center">
