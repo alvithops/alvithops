@@ -30,10 +30,8 @@
 
 
 <div align="center">
-
-  <!-- Streak Stats Card -->
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=alvithops&theme=tokyonight" alt="GitHub Streak" />
-
+  <!-- Streak Stats Card Lokal -->
+  <img src="assets/streak.svg" alt="GitHub Streak" />
 </div>
 
 ---
