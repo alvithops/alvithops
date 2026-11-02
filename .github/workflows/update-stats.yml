@@ -2,26 +2,25 @@ name: Update GitHub Stats
 
 on:
   schedule:
-    # Menjalankan aksi setiap hari pada pukul 00:00 UTC
     - cron: '0 0 * * *'
-  workflow_dispatch: # Memungkinkan Anda menjalankan aksi secara manual dari tab Actions
+  workflow_dispatch:
 
 jobs:
   update-metrics:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Diperlukan izin untuk melakukan commit otomatis ke repository
+      contents: write
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Generate GitHub Streak Stats
-        uses: ashutosh00710/github-readme-streak-stats@main
+        uses: denysdovhan/github-readme-streak-stats@master
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           USER_ID: alvithops
           theme: tokyonight
-          output: assets/streak.svg # Lokasi penyimpanan file SVG hasil generate
+          output: assets/streak.svg
 
       - name: Commit and Push Changes
         run: |
