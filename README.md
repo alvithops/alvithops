@@ -29,7 +29,12 @@
 ### 📊 GitHub Stats & Overview
 
 
-![GitHub Streak](assets/streak.svg)
+<div align="center">
+
+  <!-- Streak Stats Card -->
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=alvithops&theme=tokyonight" alt="GitHub Streak" />
+
+</div>
 
 ---
 ![3D Contribution Night View](./profile-3d-contrib/profile-night-view.svg)
